@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+
+{% block title %}share {{ post.title }}{% endblock %}
+
+{% block content %}
+
+    <h1>share {{ post.title }}</h1>
+
+    <form method="post">
+        {{ form }}
+        {% csrf_token %}
+        <input type="submit" value="send email">
+    </form>
+    
+{% endblock %}

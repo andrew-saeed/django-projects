@@ -11,5 +11,22 @@
     </p>
 
     {{ post.body|linebreaks }}
+
+    {% with comments.count as total_comments %}
+        <h2>
+            {{ total_comments }} comment{{ total_comments|pluralize }}
+        </h2>
+    {% endwith %}
+
+    {% for comment in comments %}
+        <p>
+            by {{ comment.name }} on {{ comment.created }}
+        </p>
+        {{comment.body|linebreaks}}
+    {% empty %}
+        <p>no comments here.</p>
+    {% endfor %}
+
+    {% include "blog/post/includes/comment_form.html" %}
     
 {% endblock %}

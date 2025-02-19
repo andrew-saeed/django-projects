@@ -9,7 +9,7 @@
     {% for post in posts %}
     
         <h2>
-            <a href="{% url 'blog:get_post' post.id %}">
+            <a href="{{ post.get_absolute_url }}">
                 {{ post.title }}
             </a>
         </h2>
@@ -20,6 +20,12 @@
 
         {{ post.body|truncatewords:30|linebreaks }}
 
+        <p>
+            <a href="{% url 'blog:share_post' post.id %}">share</a>
+        </p>
+
     {% endfor %}
+
+    {% include "pagination.html" with page=posts %}
 
 {% endblock %}
