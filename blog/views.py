@@ -1,14 +1,22 @@
+from django.forms.models import model_to_dict
 from django.shortcuts import render, get_object_or_404
+from taggit.models import Tag
 from .models import Post
 from .forms import EmailPostForm, CommentForm
 from django.views.generic import ListView
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_POST
+from django.db.models import Count
 # from django.http import Http404
 
-def get_posts(request):
+def get_posts(request, tag_slug=None):
     posts = Post.objects.all()
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = posts.filter(tags__in=[tag])
     paginator = Paginator(posts, 3)
     page_number = request.GET.get('page', 1)
 
@@ -18,7 +26,7 @@ def get_posts(request):
         posts_list = paginator.page(paginator.num_pages)
     except PageNotAnInteger:
         posts_list = paginator.page(1)
-    return render(request, 'blog/post/list.html', {'posts': posts_list})
+    return render(request, 'blog/post/list.html', {'posts': posts_list, 'tag': tag})
 
 def share_post(request, post_id):
     post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
@@ -65,4 +73,22 @@ def get_post(request, year, month, day, post):
     )
     comments = post.comments.filter(active=True)
     form = CommentForm()
-    return render(request, 'blog/post/single.html', {'post': post, 'comments':comments, 'form': form})
+
+    post_tags_ids = post.tags.values_list('id', flat=True)
+    similar_posts = Post.published.filter(
+        tags__in=post_tags_ids
+    ).exclude(id=post.id)
+    similar_posts = similar_posts.annotate(
+        same_tags=Count('tags')
+    ).order_by('-publish')[:4]
+
+    return render(
+        request, 
+        'blog/post/single.html', 
+        {
+            'post': post, 
+            'comments': comments, 
+            'form': form,
+            'similar_posts': similar_posts
+        }
+    )

@@ -1,4 +1,4 @@
-{% load vite_tags %}
+{% load blog_tags %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,8 +20,19 @@
             {% endblock %}
         </div>
         <div id="sidebar">
-            <h2>My blog</h2>
+            <h2>My blog - {% total_blog_posts %} - posts</h2>
             <p>This is my blog.</p>
+            <div>
+                {% older_posts 2 %}
+            </div>
+            <div>
+                {% get_most_commented_posts 2 as most_commented_posts %}
+                <ul>
+                    {% for post in most_commented_posts %}
+                        <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </body>
 </html>
