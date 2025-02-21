@@ -1,0 +1,13 @@
+{
+  "src/main.js": {
+    "file": "_3diMkO0.js",
+    "name": "main",
+    "src": "src/main.js",
+    "isEntry": true
+  },
+  "src/style.css": {
+    "file": "eUfRv511.css",
+    "src": "src/style.css",
+    "isEntry": true
+  }
+}
