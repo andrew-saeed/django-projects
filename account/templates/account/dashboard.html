@@ -1,5 +1,11 @@
-<h1>dashboard</h1>
-<form action="{% url 'logout' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">logout</button>
-</form>
+{% extends "base.html" %}
+
+{% block title %}dashboard{% endblock %}
+
+{% block content %}
+    <h1>dashboard</h1>
+    <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">logout</button>
+    </form>
+{% endblock %}

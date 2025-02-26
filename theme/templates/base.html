@@ -1,4 +1,4 @@
-{% load blog_tags %}
+{% load vite_tags %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,30 +16,11 @@
     </head>
     <body>
         <nav>
-            {% if request.user.is_authenticated %}
-                hello, {{ request.user.username }}!
-            {% else %}
-                <a href="{% url 'login' %}">sign in</a>
-            {% endif %}
+            {% include 'nav.html' %}
         </nav>
         <div id="content">
             {% block content %}
             {% endblock %}
-        </div>
-        <div id="sidebar">
-            <h2>My blog - {% total_blog_posts %} - posts</h2>
-            <p>This is my blog.</p>
-            <div>
-                {% older_posts 2 %}
-            </div>
-            <div>
-                {% get_most_commented_posts 2 as most_commented_posts %}
-                <ul>
-                    {% for post in most_commented_posts %}
-                        <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
         </div>
     </body>
 </html>

@@ -1,10 +1,16 @@
-<form method="POST">
-    {{ form }}
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ next }}" />
-    <button type="submit">sign in</button>
-</form>
+{% extends "base.html" %}
 
-<p>
-    <a href="{% url 'password_reset' %}">forgotten your password</a>
-</p>
+{% block title %}login{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        {{ form }}
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        <button type="submit">sign in</button>
+    </form>
+
+    <p>
+        <a href="{% url 'password_reset' %}">forgotten your password</a>
+    </p>
+{% endblock %}

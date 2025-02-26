@@ -1,5 +1,12 @@
-<form action="{% url 'register' %}" method="post">
-    {{user_form}}
-    {% csrf_token %}
-    <button type="submit">sign up</button>
-</form>
+{% extends "base.html" %}
+
+{% block title %}edit{% endblock %}
+
+{% block content %}
+    <h1>register</h1>
+    <form action="{% url 'register' %}" method="post">
+        {{user_form}}
+        {% csrf_token %}
+        <button type="submit">sign up</button>
+    </form>
+{% endblock %}

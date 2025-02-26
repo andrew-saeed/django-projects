@@ -1,1 +1,1 @@
-{"version":3,"file":"_3diMkO0.js","sources":["../vite/src/main.js"],"sourcesContent":["console.log('django')\n"],"names":[],"mappings":"AAAA,QAAQ,IAAI,QAAQ"}
+{"version":3,"file":"_3diMkO0.js","sources":["../resources/src/main.js"],"sourcesContent":["console.log('django')\n"],"names":[],"mappings":"AAAA,QAAQ,IAAI,QAAQ"}

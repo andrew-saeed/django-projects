@@ -8,7 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 static/debug_toolbar/
-blog/static/
+theme/static/
 node_modules
 dist
 dist-ssr
