@@ -34,7 +34,7 @@ def vite_asset(asset_path):
     Assumes each app's Vite build outputs a manifest.json to:
         BASE_DIR/blog/static/manifest.json
     """
-    manifest_file = settings.BASE_DIR / 'blog' / 'static' / 'manifest.json'
+    manifest_file = settings.BASE_DIR / 'static' / 'manifest.json'
     try:
         with open(manifest_file) as f:
             manifest = json.load(f)

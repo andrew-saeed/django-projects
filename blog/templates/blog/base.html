@@ -15,6 +15,13 @@
         {% endif %}
     </head>
     <body>
+        <nav>
+            {% if request.user.is_authenticated %}
+                hello, {{ request.user.username }}!
+            {% else %}
+                <a href="{% url 'login' %}">sign in</a>
+            {% endif %}
+        </nav>
         <div id="content">
             {% block content %}
             {% endblock %}
