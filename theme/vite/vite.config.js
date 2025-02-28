@@ -1,5 +1,6 @@
 import path from 'path'
 import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
 
 const ROOT = path.resolve('')
 const BASE = __dirname.replace(ROOT, '')
@@ -27,6 +28,7 @@ export default defineConfig({
         },
     },
     plugins: [
+        tailwindcss(),
         {
             name: 'py',
             handleHotUpdate({ file, server }) {

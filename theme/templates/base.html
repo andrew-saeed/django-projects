@@ -14,10 +14,8 @@
             <link rel="stylesheet" href="{% vite_asset 'src/style.css' %}">
         {% endif %}
     </head>
-    <body>
-        <nav>
-            {% include 'nav.html' %}
-        </nav>
+    <body class="bg-primary-bg text-base text-primary-text">
+        {% include 'partials/nav.html' %}
         <div id="content">
             {% block content %}
             {% endblock %}

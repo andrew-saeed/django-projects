@@ -1,0 +1,16 @@
+<nav class="text-4xl">
+    <h1>test</h1>
+    {% if request.user.is_authenticated %}
+        <ul>
+            <li>
+                hello, {{ request.user.username }}!
+            </li>
+            <li>
+                <a href="{% url 'dashboard' %}">dashboard</a>
+            </li>
+        </ul>
+    {% else %}
+        <a href="{% url 'login' %}">sign in</a>
+        <a href="{% url 'register' %}">sign up</a>
+    {% endif %}
+</nav>
