@@ -24,7 +24,7 @@
   --text-large: 3rem;
   --text-large--line-height: 3.625rem;
 
-  --color-primary-bg: var(--color-gray-950);
+  --color-primary-bg: #484366;
   --color-secondary-bg: var(--color-gray-800);
   --color-tertiary-bg: var(--color-gray-700);
 
@@ -34,6 +34,56 @@
 }
 
 @layer components {
+
+  .input-text {
+    display: flex;
+
+    .input-text__icon {
+      background-color: var(--color-secondary-bg);
+      padding: calc(var(--spacing) * 2);
+      border-radius: 0.5rem 0 0 0.5rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--color-tertiary-bg);
+      }
+    }
+
+    input {
+      width: 100%;
+      padding: calc(var(--spacing) * 1) calc(var(--spacing) * 3);
+      border: 0.1rem var(--color-secondary-bg) solid;
+
+      &::placeholder {
+        font-size: var(--text-base-1);
+        text-transform: capitalize;
+      }
+
+      .input-text__icon + & {
+        border-radius: 0 0.5rem 0.5rem 0;
+      }
+    }
+  }
+
+  .btn {
+    display: inline-block;
+    text-transform: capitalize;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+
+    &.btn--tertiary:hover {
+      background-color: var(--color-tertiary-bg);
+    }
+
+    &.btn--blue {
+      background-color: var(--color-blue-600);
+      &:hover {
+        background-color: var(--color-blue-400);
+      }
+    }
+  }
+
   .link-btn {
     padding: 0.2rem;
     border-radius: var(--radius-md);
