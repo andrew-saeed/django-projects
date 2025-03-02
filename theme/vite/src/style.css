@@ -10,10 +10,10 @@
   --text-small--line-height: 1rem;
 
   --text-base: 1rem;
-  --text-base--line-height: 1.625rem;
+  --text-base--line-height: 1.5rem;
   
   --text-base-1: 1.25rem;
-  --text-base--line-height: 1.875rem;
+  --text-base-1--line-height: 1.5625rem;
 
   --text-medium: 1.5rem;
   --text-medium--line-height: 2.125rem;
@@ -31,6 +31,10 @@
   --color-primary-text: var(--color-gray-300);
   --color-secondary-text: var(--color-gray-400);
   --color-tertiary-text: var(--color-gray-500);
+
+  --left-side-w: 15rem;
+
+  --btn-border-radius: 0.375rem;
 }
 
 @layer components {
@@ -42,11 +46,15 @@
       background-color: var(--color-secondary-bg);
       padding: calc(var(--spacing) * 2);
       border-radius: 0.5rem 0 0 0.5rem;
+      border: 0.1rem solid var(--color-secondary-bg);
       cursor: pointer;
 
       &:hover {
         background-color: var(--color-tertiary-bg);
+        border-color: var(--color-secondary-bg);
       }
+
+      border-right: unset;
     }
 
     input {
@@ -70,14 +78,21 @@
     text-transform: capitalize;
     font-weight: 500;
     padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
+    border-radius: var(--btn-border-radius);
+    border: 0.1rem solid;
 
-    &.btn--tertiary:hover {
-      background-color: var(--color-tertiary-bg);
+    &.btn--tertiary {
+      border-color: transparent;
+
+      &:hover {
+        background-color: var(--color-tertiary-bg);
+      }
     }
 
     &.btn--blue {
       background-color: var(--color-blue-600);
+      border-color: var(--color-tertiary-bg);
+      
       &:hover {
         background-color: var(--color-blue-400);
       }

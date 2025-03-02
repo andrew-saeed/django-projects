@@ -17,10 +17,43 @@
         {% endif %}
     </head>
     <body class="bg-primary-bg text-base text-primary-text">
-        {% include 'partials/nav.html' %}
-        <div id="content">
-            {% block content %}
-            {% endblock %}
+
+        <div id="page-layout" class="relative max-w-7xl mx-auto">
+
+            {% include 'partials/header.html' %}
+
+            <div id="main-layout" class="grid grid-cols-1 md:grid-cols-[var(--left-side-w)_1fr]">
+
+                <aside class="left-side
+                    max-md:h-svh max-md:w-(--left-side-w) max-md:absolute max-md:top-0 max-md:-left-(--left-side-w)
+                    p-2 space-y-4"
+                    aria-label="Primary sidebar"
+                >
+                    <div class="input-text w-full max-w-150 md:hidden">
+                        <div class="input-text__icon">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                            </svg>              
+                        </div>
+                        <input type="text" name="search" id="search" placeholder="search...">
+                    </div>
+                    <p class="text-base-1 font-bold">
+                        Our Community is a community of 2,000,000 amazing developers
+                    </p>
+                    <p>
+                        We're a place where coders share, stay up-to-date and grow their careers.
+                    </p>
+                    <p class="flex flex-col gap-2 text-center">
+                        <a class="btn btn--blue" href="{% url 'register' %}">create account</a>
+                        <a class="btn btn--tertiary" href="{% url 'login' %}">login</a>
+                    </p>
+                </aside>
+
+                <main id="right-side-col">
+                    {% block content %}
+                    {% endblock %}
+                </main>
+            </div>
         </div>
     </body>
 </html>
