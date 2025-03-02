@@ -103,7 +103,7 @@
   .icon-btn {
     width: var(--btn-icon-box);
     height: var(--btn-icon-box);
-    color: black;
+    color: var(--color-primary-text);
     border-radius: var(--btn-border-radius);
     cursor: pointer;
 

@@ -12,6 +12,9 @@ document.addEventListener('alpine:init', () => {
         openLeftSide() {
             leftSide.style.left = '0'
         },
+        closeLeftSide() {
+            leftSide.style.left = 'calc(var(--left-side-w)* -1)'
+        },
     }))
 })
 
