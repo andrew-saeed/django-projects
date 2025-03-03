@@ -16,20 +16,19 @@
             <link rel="stylesheet" href="{% vite_asset 'src/style.css' %}">
         {% endif %}
     </head>
-    <body class="bg-primary-bg text-base text-primary-text">
+    <body class="bg-black text-base text-primary-text">
 
-        <div x-data="layout" id="page-layout" class="relative max-w-7xl mx-auto">
+        <div x-data="layout" id="page-layout" class="relative">
 
-            <div x-show="dropmask" @click="closeLeftSide" x-transition.opacity class="layout-mask absolute z-10 inset-0 h-svh bg-secondary-bg/80 md:hidden"></div>
+            <div x-show="dropmask" @click="closeLeftSide" x-transition.opacity class="layout-mask absolute z-10 inset-0 h-svh bg-[#f9f9f9]/50 md:hidden"></div>
 
             {% include 'partials/header.html' %}
 
-            <div id="main-layout" class="grid grid-cols-1 md:grid-cols-[var(--left-side-w)_1fr]">
+            <div class="main-container grid grid-cols-1 md:grid-cols-[var(--left-side-w)_1fr]">
 
                 <aside class="left-side
-                    bg-primary-bg 
-                    max-md:h-svh max-md:w-(--left-side-w) max-md:absolute max-md:top-0 max-md:-left-(--left-side-w) max-md:z-20
-                    p-2 space-y-4"
+                    max-md:h-svh max-md:w-(--left-side-w) max-md:absolute max-md:top-0 max-md:-left-(--left-side-w) max-md:z-20 max-md:bg-primary-bg
+                    p-4 space-y-4"
                     aria-label="Primary sidebar"
                 >
                     <div class="space-y-4 md:hidden">
