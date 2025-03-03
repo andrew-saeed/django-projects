@@ -9,11 +9,15 @@ document.addEventListener('alpine:init', () => {
 
     Alpine.data('layout', () => ({
 
+        dropmask: false,
+
         openLeftSide() {
             leftSide.style.left = '0'
+            this.dropmask = true
         },
         closeLeftSide() {
             leftSide.style.left = 'calc(var(--left-side-w)* -1)'
+            this.dropmask = false
         },
     }))
 })
