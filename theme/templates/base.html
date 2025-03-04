@@ -20,18 +20,18 @@
 
         <div x-data="layout" id="page-layout" class="relative">
 
-            <div x-show="dropmask" @click="closeLeftSide" x-transition.opacity class="layout-mask absolute z-10 inset-0 h-svh bg-[#f9f9f9]/50 md:hidden"></div>
+            <div x-show="dropmask" @click="closeLeftSide" x-transition.opacity class="layout-mask absolute z-10 inset-0 h-svh bg-[#f9f9f9]/50 lg:hidden"></div>
 
             {% include 'partials/header.html' %}
 
-            <div class="main-container grid grid-cols-1 md:grid-cols-[var(--left-side-w)_1fr]">
+            <div class="main-container grid grid-cols-1 lg:grid-cols-[var(--left-side-w)_1fr]">
 
                 <aside class="left-side
-                    max-md:h-svh max-md:w-(--left-side-w) max-md:absolute max-md:top-0 max-md:-left-(--left-side-w) max-md:z-20 max-md:bg-primary-bg
+                    max-lg:h-svh max-lg:w-(--left-side-w) max-lg:absolute max-lg:top-0 max-lg:-left-(--left-side-w) max-lg:z-20 max-lg:bg-primary-bg
                     p-4 space-y-4"
                     aria-label="Primary sidebar"
                 >
-                    <div class="space-y-4 md:hidden">
+                    <div class="space-y-4 lg:hidden">
                         <div class="flex justify-end">
                             <svg @click="closeLeftSide" class="icon-btn" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>

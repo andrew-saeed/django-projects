@@ -7,7 +7,7 @@
   --text-xsmall--line-height: 1.375rem;
 
   --text-small: 0.875rem;
-  --text-small--line-height: 1rem;
+  --text-small--line-height: 1.3125rem;
 
   --text-base: 1rem;
   --text-base--line-height: 1.5625rem;
@@ -16,7 +16,7 @@
   --text-base-1--line-height: 1.875rem;
 
   --text-medium: 1.5rem;
-  --text-medium--line-height: 2.125rem;
+  --text-medium--line-height: 2.25rem;
 
   --text-medium-1: 1.5625rem;
   --text-medium-1--line-height: 1.953125rem;
@@ -34,6 +34,8 @@
   --color-primary-text: var(--color-gray-300);
   --color-secondary-text: var(--color-gray-400);
   --color-tertiary-text: var(--color-gray-500);
+
+  --color-primary-border: #242424;
 
   --left-side-w: 15rem;
 
@@ -85,6 +87,7 @@
       margin: calc(1.125rem* 2);
       margin-inline-start: 13.5rem;
       margin-inline-end: 13.5rem;
+      opacity: 0.3;
     }
 
     h2, h3 {
@@ -136,6 +139,17 @@
     font-weight: 500;
     padding: 0.5rem 1rem;
     border-radius: var(--btn-border-radius);
+    cursor: pointer;
+
+    &[disabled] {
+      cursor: unset;
+      opacity: 0.6;
+    }
+
+    &.btn--small {
+      font-size: var(--text-small);
+      padding: 0.25rem 0.75rem;
+    }
 
     &.btn--tertiary {
 

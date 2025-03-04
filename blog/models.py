@@ -52,8 +52,12 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         related_name='comments'
     )
-    name = models.CharField(max_length=255)
-    email = models.EmailField()
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='author',
+        null=True
+    )
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

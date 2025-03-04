@@ -8,7 +8,7 @@
 
     <div class="bg-primary-bg md:rounded-xl">
 
-        <div class="px-16 py-8 pb-0">
+        <div class="px-2 lg:px-16 py-8 pb-0">
 
             <div class="mb-5">
                 {% include "blog/post/includes/post-author.html" %}
@@ -24,24 +24,55 @@
     
         </div>
     
-        <div class="post-body px-16 py-8">
+        <div class="post-body px-2 lg:px-16 py-8">
             {{ post.body|markdown }}
         </div>
     
-        {% with comments.count as total_comments %}
-            <h2>
-                {{ total_comments }} comment{{ total_comments|pluralize }}
-            </h2>
-        {% endwith %}
-    
-        {% for comment in comments %}
-            <p>
-                by {{ comment.name }} on {{ comment.created }}
-            </p>
-            {{comment.body|linebreaks}}
-        {% empty %}
-            <p>no comments here.</p>
-        {% endfor %}
+        <div class="px-2 lg:px-16 py-8 border-t border-(--color-primary-border)">
+            {% with comments.count as total_comments %}
+                <h2 class="capitalize text-medium mb-6">
+                    comment{{ total_comments|pluralize }} ({{ total_comments }})
+                </h2>
+            {% endwith %}
+        
+            <ul class="space-y-6">
+
+                <li class="grid grid-cols-[max-content_1fr] gap-2">
+                    <div class="w-8 h-8 bg-white rounded-full"></div>
+                    <form action="{% url "blog:comment_on_post" post.id %}" method="post" x-data="{comment: ''}">
+                        <div>
+                            <textarea 
+                                name="body" 
+                                id="body" 
+                                class="w-full bg-black p-2 border border-tertiary-text rounded-md placeholder:text-tertiary-text"
+                                placeholder="Add to the discussion"
+                                x-model="comment"
+                            ></textarea>
+                        </div>
+                        {% csrf_token %}
+                        <div>
+                            <input type="submit" value="comment" class="btn btn--blue btn--small" :disabled="comment.length == 0">
+                        </div>
+                    </form>
+                </li>
+
+                {% for comment in comments %}
+                    <li class="grid grid-cols-[max-content_1fr] gap-2">
+                        <div class="w-8 h-8 bg-white rounded-full"></div>
+                        <div class="w-full p-1 shadow-[0_0_0_1px_var(--color-tertiary-bg)] rounded-md">
+                            <p class="pt-2 px-3">
+                                <span class="font-medium capitalize">{{ comment.author }}</span>
+                                <span>•</span>
+                                <span class="text-small">{{ comment.created|date:'M' }}</span>
+                            </p>
+                            <p class="text-base-1 mt-2 mb-4 px-3">{{comment.body}}</p>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li>no comments here.</li>
+                {% endfor %}
+            </ul>
+        </div>
 
     </div>
 
@@ -50,6 +81,4 @@
             <a href="{{ similar_post.get_absolute_url }}">{{ similar_post.title }} {{ similar_post.same_tags }}</a>
         </div>
     {% endfor %}
-
-    {% include "blog/post/includes/comment_form.html" %}
 {% endblock %}
