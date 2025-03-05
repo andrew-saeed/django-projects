@@ -3,10 +3,48 @@
 {% block title %}edit{% endblock %}
 
 {% block content %}
-    <h1>register</h1>
-    <form action="{% url 'register' %}" method="post">
-        {{user_form}}
-        {% csrf_token %}
-        <button type="submit">sign up</button>
-    </form>
+
+    <section class="bg-primary-bg p-8 max-w-xl mx-auto md:round-xl">
+
+        <h1 class="text-base-1 capitalize font-bold pb-4">create your account</h1>
+
+        <form action="{% url 'register' %}" method="post" novalidate>
+
+            <div>
+                <label for="{{user_form.first_name.id_for_label}}">{{user_form.first_name.label}}</label>
+                {{user_form.first_name}}
+                {{user_form.first_name.errors}}
+            </div>
+
+            <div>
+                <label for="{{user_form.username.id_for_label}}">{{user_form.username.label}}</label>
+                {{user_form.username}}
+                {{user_form.username.errors}}
+            </div>
+
+            <div>
+                <label for="{{user_form.email.id_for_label}}">{{user_form.email.label}}</label>
+                {{user_form.email}}
+                {{user_form.email.errors}}
+            </div>
+
+            <div>
+                <label for="{{user_form.password.id_for_label}}">{{user_form.password.label}}</label>
+                {{user_form.password}}
+                {{user_form.password.errors}}
+            </div>
+
+            <div>
+                <label for="{{user_form.password2.id_for_label}}">{{user_form.password2.label}}</label>
+                {{user_form.password2}}
+                {{user_form.password2.errors}}
+            </div>
+
+            {% csrf_token %}
+
+            <div>
+                <button class="btn btn--blue" type="submit">sign up</button>
+            </div>
+        </form>
+    </section>
 {% endblock %}

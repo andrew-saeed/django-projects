@@ -24,10 +24,20 @@
 
             {% include 'partials/header.html' %}
 
-            <div class="main-container grid grid-cols-1 lg:grid-cols-[var(--left-side-w)_1fr]">
+            <div 
+                class="main-container 
+                {% if '/account/' not in request.path %} 
+                    grid grid-cols-1 lg:grid-cols-[var(--left-side-w)_1fr]
+                {% endif %}"
+            >
 
                 <aside class="left-side
-                    max-lg:h-svh max-lg:w-(--left-side-w) max-lg:absolute max-lg:top-0 max-lg:-left-(--left-side-w) max-lg:z-20 max-lg:bg-primary-bg
+                    {% if '/account/' not in request.path %}
+                        max-lg:h-svh max-lg:w-(--left-side-w) max-lg:absolute max-lg:top-0 max-lg:-left-(--left-side-w) max-lg:z-20 max-lg:bg-primary-bg
+                    {% else %}
+                        min-lg:hidden
+                        h-svh w-(--left-side-w) absolute top-0 -left-(--left-side-w) z-20 bg-primary-bg
+                    {% endif %}
                     p-4 space-y-4"
                     aria-label="Primary sidebar"
                 >

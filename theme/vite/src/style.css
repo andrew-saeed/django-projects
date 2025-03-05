@@ -45,6 +45,30 @@
 
 @layer components {
 
+  form {
+
+    div {
+      display: flex;
+      flex-direction: column;
+      margin-top: 0.5rem;
+
+      &:last-of-type {
+        display: inline-flex;
+        margin-top: 1.5rem;
+      }
+
+      label {
+        text-transform: capitalize;
+      }
+  
+      input {
+        padding: 0.375rem 0.5rem;
+        margin-top: 0.5rem;
+        border: 0.1px solid var(--color-tertiary-bg);
+      }
+    }
+  }
+
   .main-container {
     max-width: 80rem;
     margin: 0 auto;
