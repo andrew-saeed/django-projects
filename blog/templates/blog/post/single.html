@@ -6,7 +6,7 @@
 
 {% block content %}
 
-    <div class="bg-primary-bg md:rounded-xl">
+    <section class="bg-primary-bg md:rounded-xl">
 
         <div class="px-2 lg:px-16 py-8 pb-0">
 
@@ -69,16 +69,29 @@
                         </div>
                     </li>
                 {% empty %}
-                    <li>no comments here.</li>
+                    <li>no comments yet.</li>
                 {% endfor %}
             </ul>
         </div>
 
-    </div>
+    </section>
 
-    {% for similar_post in similar_posts %}
-        <div>
-            <a href="{{ similar_post.get_absolute_url }}">{{ similar_post.title }} {{ similar_post.same_tags }}</a>
-        </div>
-    {% endfor %}
+    <section class="bg-primary-bg px-16 py-8 mt-8 md:rounded-xl">
+        <h2 class="text-medium mb-6">Read next</h2>
+        <ul class="space-y-6">
+            {% for similar_post in similar_posts %}
+                <li>
+                    <a href="{{ similar_post.get_absolute_url }}">
+                        <div class="grid grid-cols-[max-content_1fr] gap-4">
+                            <div class="w-16 h-16 bg-white rounded-full"></div>
+                            <div>
+                                <h3 class="text-base-1">{{ similar_post.title }}</h3>
+                                <p>{{post.author.username}} - {{post.created|date:'M'}}</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
 {% endblock %}
