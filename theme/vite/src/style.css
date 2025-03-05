@@ -53,7 +53,6 @@
       margin-top: 0.5rem;
 
       &:last-of-type {
-        display: inline-flex;
         margin-top: 1.5rem;
       }
 
@@ -65,6 +64,7 @@
         padding: 0.375rem 0.5rem;
         margin-top: 0.5rem;
         border: 0.1px solid var(--color-tertiary-bg);
+        border-radius: 0.375rem;
       }
     }
   }
