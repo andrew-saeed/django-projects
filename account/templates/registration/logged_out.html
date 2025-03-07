@@ -3,8 +3,10 @@
 {% block title %}bye{% endblock %}
 
 {% block content %}
-    <h1>logged out successfully</h1>
+<section class="bg-primary-bg p-8 max-w-xl mx-auto md:round-xl">
+    <h1 class="text-base-1 capitalize font-bold pb-4">logged out successfully</h1>
     <p>
-        <a href="{% url 'login' %}">sign in</a>
+        <a class="link with-underline capitalize" href="{% url 'login' %}">sign in</a>
     </p>
+</section>
 {% endblock %}

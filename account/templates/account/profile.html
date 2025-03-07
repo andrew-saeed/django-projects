@@ -1,0 +1,55 @@
+{% extends "account.html" %}
+
+{% block account %}
+
+    <section class="w-full bg-primary-bg p-8 md:round-xl">
+
+        <h1 class="text-base-1 capitalize font-bold pb-4">your account</h1>
+    
+        <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data" novalidate>
+    
+            <div class="form-group">
+                <label for="{{profile_form.photo.id_for_label}}">{{profile_form.photo.label}}</label>
+                {{profile_form.photo}}
+                {{profile_form.photo.errors}}
+            </div>
+    
+            <div class="form-group">
+                <label for="{{user_form.first_name.id_for_label}}">{{user_form.first_name.label}}</label>
+                {{user_form.first_name}}
+                {{user_form.first_name.errors}}
+            </div>
+    
+            <div class="form-group">
+                <label for="{{user_form.last_name.id_for_label}}">{{user_form.last_name.label}}</label>
+                {{user_form.last_name}}
+                {{user_form.last_name.errors}}
+            </div>
+    
+            <div class="form-group">
+                <label for="{{user_form.username.id_for_label}}">{{user_form.username.label}}</label>
+                {{user_form.username}}
+                {{user_form.username.errors}}
+            </div>
+    
+            <div class="form-group">
+                <label for="{{user_form.email.id_for_label}}">{{user_form.email.label}}</label>
+                {{user_form.email}}
+                {{user_form.email.errors}}
+            </div>
+    
+            <div class="form-group">
+                <label for="{{profile_form.date_of_birth.id_for_label}}">{{profile_form.date_of_birth.label}}</label>
+                {{profile_form.date_of_birth}}
+                {{profile_form.date_of_birth.errors}}
+            </div>
+    
+            {% csrf_token %}
+            
+            <div class="form-actions">
+                <button class="btn btn--blue" type="submit">save</button>
+            </div>
+        </form>
+    </section>
+
+{% endblock %}

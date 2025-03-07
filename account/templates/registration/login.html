@@ -9,13 +9,13 @@
         
         <form method="POST" novalidate>
             
-            <div>
+            <div class="form-group">
                 <label for="{{form.username.id_for_label}}">{{form.username.label}}</label>
                 {{form.username}}
                 {{form.username.errors}}
             </div>
 
-            <div>
+            <div class="form-group">
                 <label for="{{form.password.id_for_label}}">{{form.password.label}}</label>
                 {{form.password}}
                 {{form.password.errors}}
@@ -25,11 +25,11 @@
 
             <input type="hidden" name="next" value="{{ next }}" />
 
-            <div class="block text-end mt-6">
-                <a class="btn btn--tertiary capitalize" href="{% url 'password_reset' %}">forgot password?</a>
+            <div class="form-actions text-end">
+                <a class="link with-underline capitalize" href="{% url 'password_reset' %}">forgot password?</a>
             </div>
 
-            <div>
+            <div class="form-actions">
                 <button class="btn btn--blue" type="submit">sign in</button>
             </div>
         </form>

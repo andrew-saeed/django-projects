@@ -1,11 +1,10 @@
-{% extends "base.html" %}
+{% extends "account.html" %}
 
-{% block title %}dashboard{% endblock %}
+{% block account %}
 
-{% block content %}
-    <h1>dashboard</h1>
-    <form action="{% url 'logout' %}" method="POST">
-        {% csrf_token %}
-        <button type="submit">logout</button>
-    </form>
+    <section class="w-full bg-primary-bg p-8 md:round-xl">
+
+        <h1 class="text-base-1 capitalize font-bold pb-4">dashboard</h1>
+    </section>
+
 {% endblock %}

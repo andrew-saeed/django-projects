@@ -20,9 +20,14 @@ class UserRegistrationForm(forms.ModelForm):
         return cd['password2']
 
 class UserEditForm(forms.ModelForm):
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    username = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
+
     class Meta:
         model = get_user_model()
-        fields = ['first_name', 'last_name', 'email']
+        fields = ['first_name', 'last_name', 'username', 'email']
 
 class ProfileEditForm(forms.ModelForm):
     class Meta:

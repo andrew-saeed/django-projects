@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}dashboard{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-[15rem_1fr] max-w-3xl mx-auto">
+    <aside id="account-nav" class="p-8">
+        <ul class="capitalize">
+            <li><a href="/account/" class="{% if request.path == '/account/' %}font-bold underline{% endif %}">dashboard</a></li>
+            <li><a href="/account/profile/" class="{% if request.path == '/account/profile/' %}font-bold underline{% endif %}">profile</a></li>
+            <li><a href="/account/password_change/" class="{% if request.path == '/account/password_change/' %}font-bold underline{% endif %}">password</a></li>
+        </ul>
+    </aside>
+    {% block account %}
+    {% endblock %}
+</div>
+{% endblock %}
