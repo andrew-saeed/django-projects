@@ -14,3 +14,8 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'profile of {self.user.username}'
+    
+    def get_photo_url(self):
+        if self.photo:
+            return self.photo.url
+        return '/static/default.jpg'

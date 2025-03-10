@@ -36,6 +36,8 @@
   --color-tertiary-text: var(--color-gray-500);
 
   --color-primary-border: #242424;
+  --color-hover-bg: #312e81bf;
+  --color-secondary-hover: #63627fbf;
 
   --left-side-w: 15rem;
 
@@ -44,6 +46,13 @@
 }
 
 @layer components {
+
+  #account-nav {
+
+    li:hover {
+      background-color: var(--color-hover-bg);
+    }
+  }
 
   form {
 

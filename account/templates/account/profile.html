@@ -9,9 +9,8 @@
         <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data" novalidate>
     
             <div class="form-group">
-                <label for="{{profile_form.photo.id_for_label}}">{{profile_form.photo.label}}</label>
-                {{profile_form.photo}}
-                {{profile_form.photo.errors}}
+                {{request.user.profile.get_photo_url}}
+                <input type="file" name="photo" id="id_photo" accept="image/*">
             </div>
     
             <div class="form-group">

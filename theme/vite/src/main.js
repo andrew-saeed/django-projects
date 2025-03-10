@@ -10,6 +10,7 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('layout', () => ({
 
         dropmask: false,
+        accountDropdownOpen: false,
 
         openLeftSide() {
             leftSide.style.left = '0'
@@ -19,6 +20,9 @@ document.addEventListener('alpine:init', () => {
             leftSide.style.left = 'calc(var(--left-side-w)* -1)'
             this.dropmask = false
         },
+        toggleAccountDropdown() {
+            this.accountDropdownOpen = !this.accountDropdownOpen
+        }
     }))
 })
 

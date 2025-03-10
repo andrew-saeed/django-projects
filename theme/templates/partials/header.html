@@ -19,6 +19,12 @@
                 <li>
                     <a href="{% url 'dashboard' %}">dashboard</a>
                 </li>
+                <li>
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">logout</button>
+                    </form>
+                </li>
             </ul>
         {% else %}
             <div class="input-text w-full max-w-150 max-lg:hidden">
