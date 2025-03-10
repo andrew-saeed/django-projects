@@ -5,8 +5,8 @@
 {% block content %}
 <div id="account" class="grid md:grid-cols-[15rem_1fr] md:gap-4 md:max-w-3xl md:mx-auto">
     <aside id="account-nav">
-        <ul class="capitalize hidden md:block">
-            <li class="{% if request.path == '/account/' %}bg-primary-bg font-bold md:rounded-md{% endif %}">
+        <ul class="capitalize hidden md:block space-y-1">
+            <li class="{% if request.path == '/account/' %}bg-primary-bg font-bold{% endif %} rounded-md">
                 <a class="flex gap-1 p-2" href="/account/">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" role="img" aria-labelledby="aac3g1zilk6bbhnn42aqax5smvd4mvxj" class="crayons-icon crayons-icon--default"><title id="aac3g1zilk6bbhnn42aqax5smvd4mvxj">Extensions</title>
                         <path d="M7.556 22a.554.554 0 01-.494-.81l3.87-7.523h-6.71a.556.556 0 01-.363-.976L16.082 2.135a.555.555 0 01.857.675l-3.87 7.523h6.709a.556.556 0 01.363.976L7.919 21.865a.555.555 0 01-.363.135" fill="#ffcc4d"></path>
@@ -14,7 +14,7 @@
                     <span>dashboard</span>
                 </a>
             </li>
-            <li class="{% if request.path == '/account/profile/' %}bg-primary-bg font-bold rounded-md{% endif %}">
+            <li class="{% if request.path == '/account/profile/' %}bg-primary-bg font-bold{% endif %} rounded-md">
                 <a class="flex gap-1 p-2" href="/account/profile/">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" role="img" aria-labelledby="ad4o25tpotb5pd06kqhfj10j8bd4nofb" class="crayons-icon crayons-icon--default"><title id="ad4o25tpotb5pd06kqhfj10j8bd4nofb">Profile</title>
                         <path d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z" fill="#FFCC4D"></path>
@@ -23,7 +23,7 @@
                     <span>profile</span>
                 </a>
             </li>
-            <li class="{% if request.path == '/account/password_change/' %}bg-primary-bg font-bold rounded-md{% endif %}">
+            <li class="{% if request.path == '/account/password_change/' %}bg-primary-bg font-bold{% endif %} rounded-md">
                 <a class="flex gap-1 p-2" href="/account/password_change/">
                     <svg fill="#ffcc4d" width="24px" height="24px" viewBox="-18.91 0 122.88 122.88" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="enable-background:new 0 0 85.07 122.88" xml:space="preserve">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

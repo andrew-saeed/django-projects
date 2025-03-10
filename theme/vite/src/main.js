@@ -7,6 +7,24 @@ document.addEventListener('alpine:init', () => {
     const leftSide = document.querySelector('.left-side')
     leftSide.style.transition = 'left 0.3s ease-out'
 
+    Alpine.data('profile', () => ({
+        init() {
+            this.$refs.photoInput.addEventListener('change', (e) => {
+                const file = e.target.files[0]
+                if(file) {
+                    const reader = new FileReader()
+                    reader.onload = (e) => {
+                        this.$refs.photoImg.src = e.target.result
+                    }
+                    reader.readAsDataURL(file)
+                }
+            })
+        },
+        openPhotoImgInput() {
+            this.$refs.photoInput.click()
+        }
+    }))
+
     Alpine.data('layout', () => ({
 
         dropmask: false,

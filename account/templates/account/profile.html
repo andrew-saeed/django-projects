@@ -2,15 +2,20 @@
 
 {% block account %}
 
-    <section class="w-full bg-primary-bg p-8 md:round-xl">
+    <section class="w-full bg-primary-bg p-8 md:rounded-xl">
 
         <h1 class="text-base-1 capitalize font-bold pb-4">your account</h1>
     
         <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data" novalidate>
     
-            <div class="form-group">
-                {{request.user.profile.get_photo_url}}
-                <input type="file" name="photo" id="id_photo" accept="image/*">
+            <div class="form-group flex-row items-end gap-2 mt-0 mb-8" x-data="profile">
+                <div class="w-20 h-20 rounded-full overflow-hidden flex-none">
+                    <img class="w-full" x-ref="photoImg" src="{{request.user.profile.get_photo_url}}" alt="{{request.user.username}}">
+                </div>
+                <div class="w-full capitalize p-2 border border-tertiary-bg cursor-pointer rounded-md" @click="openPhotoImgInput()">
+                    <span class="p-1 bg-tertiary-bg">change photo</span>
+                </div>
+                <input x-ref="photoInput" type="file" name="photo" id="id_photo" accept="image/*" class="hidden">
             </div>
     
             <div class="form-group">
