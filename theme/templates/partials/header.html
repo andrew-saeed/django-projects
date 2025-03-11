@@ -1,6 +1,6 @@
 <header id="top-bar" class="bg-primary-bg border-b-2 border-black">
     
-    <div class="main-container grid grid-cols-[max-content_1fr_max-content] min-lg:gap-2 items-center p-2">
+    <div class="main-container grid grid-cols-[max-content_1fr] min-lg:gap-2 items-center p-2">
 
         <div class="flex gap-2">
             <svg @click="openLeftSide" class="icon-btn border-3 border-black min-lg:hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24">
@@ -12,20 +12,36 @@
         </div>
 
         {% if request.user.is_authenticated %}
-            <ul>
-                <li>
-                    hello, {{ request.user.username }}!
-                </li>
-                <li>
-                    <a href="{% url 'dashboard' %}">dashboard</a>
-                </li>
-                <li>
-                    <form method="POST" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <button type="submit">logout</button>
-                    </form>
-                </li>
-            </ul>
+            <div class="relative justify-self-end">
+                <div @click="toggleHeaderDropdown" class="flex-none cursor-pointer">
+                    <div class="flex items-end">
+                        <svg width="1rem" height="1rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier"> 
+                                <path d="M17.9188 8.17969H11.6888H6.07877C5.11877 8.17969 4.63877 9.33969 5.31877 10.0197L10.4988 15.1997C11.3288 16.0297 12.6788 16.0297 13.5088 15.1997L15.4788 13.2297L18.6888 10.0197C19.3588 9.33969 18.8788 8.17969 17.9188 8.17969Z" class="fill-white"></path> 
+                            </g>
+                        </svg>
+                        <div class="w-20 h-20 border-2 border-hover-bg rounded-full overflow-hidden">
+                            <img class="w-full" x-ref="photoImg" src="{{request.user.profile.get_photo_url}}" alt="{{request.user.username}}">
+                        </div>
+                    </div>
+                </div>
+                <ul @click.outside="headerDropdownOpen = false" x-show="headerDropdownOpen" class="absolute right-10/12 w-(--popups-w) bg-primary-bg capitalize border border-white p-2 rounded-md">
+                    <li class="border-b border-tertiary-bg/60 px-4 py-2">
+                        {{request.user.username}}
+                    </li>
+                    <li class="px-4 py-2 hover:bg-hover-bg">
+                        <a class="block w-full" href="{% url 'dashboard' %}">dashboard</a>
+                    </li>
+                    <li class="border-t border-tertiary-bg/60 hover:bg-hover-bg">
+                        <form method="POST" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="w-full text-left capitalize px-4 py-2 cursor-pointer">logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         {% else %}
             <div class="input-text w-full max-w-150 max-lg:hidden">
                 <div class="input-text__icon">

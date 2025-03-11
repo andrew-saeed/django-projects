@@ -29,6 +29,7 @@ document.addEventListener('alpine:init', () => {
 
         dropmask: false,
         accountDropdownOpen: false,
+        headerDropdownOpen: false,
 
         openLeftSide() {
             leftSide.style.left = '0'
@@ -40,6 +41,9 @@ document.addEventListener('alpine:init', () => {
         },
         toggleAccountDropdown() {
             this.accountDropdownOpen = !this.accountDropdownOpen
+        },
+        toggleHeaderDropdown() {
+            this.headerDropdownOpen = !this.headerDropdownOpen
         }
     }))
 })

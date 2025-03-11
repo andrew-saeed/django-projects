@@ -13,7 +13,7 @@
                     <img class="w-full" x-ref="photoImg" src="{{request.user.profile.get_photo_url}}" alt="{{request.user.username}}">
                 </div>
                 <div class="w-full capitalize p-2 border border-tertiary-bg cursor-pointer rounded-md" @click="openPhotoImgInput()">
-                    <span class="p-1 bg-tertiary-bg">change photo</span>
+                    <span class="bg-tertiary-bg py-1 px-2 rounded-md">change photo</span>
                 </div>
                 <input x-ref="photoInput" type="file" name="photo" id="id_photo" accept="image/*" class="hidden">
             </div>
