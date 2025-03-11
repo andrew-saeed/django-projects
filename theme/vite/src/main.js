@@ -1,6 +1,10 @@
+import flatpickr from "flatpickr"
 import Alpine from 'alpinejs'
  
 window.Alpine = Alpine
+
+import 'flatpickr/dist/flatpickr.css'
+import 'flatpickr/dist/themes/dark.css'
 
 document.addEventListener('alpine:init', () => {
 
@@ -9,6 +13,8 @@ document.addEventListener('alpine:init', () => {
 
     Alpine.data('profile', () => ({
         init() {
+            flatpickr("#id_date_of_birth", {})
+
             this.$refs.photoInput.addEventListener('change', (e) => {
                 const file = e.target.files[0]
                 if(file) {
