@@ -90,3 +90,6 @@ def get_post(request, year, month, day, post):
             'similar_posts': similar_posts
         }
     )
+
+def search(request):
+    return render(request, 'blog/search.html')

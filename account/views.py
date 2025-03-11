@@ -35,6 +35,10 @@ def profile(request):
 def dashboard(request):
     return render(request, 'account/dashboard.html')
 
+@login_required
+def notifications(request):
+    return render(request, 'account/notifications.html')
+
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)

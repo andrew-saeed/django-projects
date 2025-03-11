@@ -1,6 +1,6 @@
 <header id="top-bar" class="bg-primary-bg border-b-2 border-black">
     
-    <div class="main-container grid grid-cols-[max-content_1fr] min-lg:gap-2 items-center p-2">
+    <div class="main-container grid grid-cols-[max-content_1fr] md:grid-cols-[max-content_1fr_max-content] min-lg:gap-2 items-center p-2">
 
         <div class="flex gap-2">
             <svg @click="openLeftSide" class="icon-btn border-3 border-black min-lg:hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24">
@@ -12,9 +12,23 @@
         </div>
 
         {% if request.user.is_authenticated %}
-            <div class="relative justify-self-end">
-                <div @click="toggleHeaderDropdown" class="flex-none cursor-pointer">
-                    <div class="flex items-end">
+            <div class="justify-self-end">
+                <div class="flex items-end gap-2">
+                    <a href="{% url 'blog:search' %}">
+                        <svg class="icon-btn p-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke="white" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"></path>
+                        </svg>
+                    </a>
+                    <a href="{% url 'notifications' %}">
+                        <svg class="icon-btn p-1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier"> 
+                                <path d="M12.0009 5C13.4331 5 14.8066 5.50571 15.8193 6.40589C16.832 7.30606 17.4009 8.52696 17.4009 9.8C17.4009 11.7691 17.846 13.2436 18.4232 14.3279C19.1606 15.7133 19.5293 16.406 19.5088 16.5642C19.4849 16.7489 19.4544 16.7997 19.3026 16.9075C19.1725 17 18.5254 17 17.2311 17H6.77066C5.47638 17 4.82925 17 4.69916 16.9075C4.54741 16.7997 4.51692 16.7489 4.493 16.5642C4.47249 16.406 4.8412 15.7133 5.57863 14.3279C6.1558 13.2436 6.60089 11.7691 6.60089 9.8C6.60089 8.52696 7.16982 7.30606 8.18251 6.40589C9.19521 5.50571 10.5687 5 12.0009 5ZM12.0009 5V3M9.35489 20C10.0611 20.6233 10.9888 21.0016 12.0049 21.0016C13.0209 21.0016 13.9486 20.6233 14.6549 20" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> 
+                            </g>
+                        </svg>
+                    </a>
+                    <div class="relative flex items-end cursor-pointer" @click="toggleHeaderDropdown">
                         <svg width="1rem" height="1rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -25,22 +39,22 @@
                         <div class="w-20 h-20 border-2 border-hover-bg rounded-full overflow-hidden">
                             <img class="w-full" x-ref="photoImg" src="{{request.user.profile.get_photo_url}}" alt="{{request.user.username}}">
                         </div>
+                        <ul @click.outside="headerDropdownOpen = false" x-show="headerDropdownOpen" class="absolute top-full right-8/12 w-(--popups-w) bg-primary-bg capitalize border border-white p-2 rounded-md">
+                            <li class="border-b border-tertiary-bg/60 px-4 py-2">
+                                {{request.user.username}}
+                            </li>
+                            <li class="px-4 py-2 hover:bg-hover-bg">
+                                <a class="block w-full" href="{% url 'dashboard' %}">dashboard</a>
+                            </li>
+                            <li class="border-t border-tertiary-bg/60 hover:bg-hover-bg">
+                                <form method="POST" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="w-full text-left capitalize px-4 py-2 cursor-pointer">logout</button>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <ul @click.outside="headerDropdownOpen = false" x-show="headerDropdownOpen" class="absolute right-10/12 w-(--popups-w) bg-primary-bg capitalize border border-white p-2 rounded-md">
-                    <li class="border-b border-tertiary-bg/60 px-4 py-2">
-                        {{request.user.username}}
-                    </li>
-                    <li class="px-4 py-2 hover:bg-hover-bg">
-                        <a class="block w-full" href="{% url 'dashboard' %}">dashboard</a>
-                    </li>
-                    <li class="border-t border-tertiary-bg/60 hover:bg-hover-bg">
-                        <form method="POST" action="{% url 'logout' %}">
-                            {% csrf_token %}
-                            <button type="submit" class="w-full text-left capitalize px-4 py-2 cursor-pointer">logout</button>
-                        </form>
-                    </li>
-                </ul>
             </div>
         {% else %}
             <div class="input-text w-full max-w-150 max-lg:hidden">

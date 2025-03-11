@@ -6,4 +6,5 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('', views.dashboard, name='dashboard'),
     path('profile/', views.profile, name='profile'),
+    path('notifications/', views.notifications, name='notifications'),
 ]
