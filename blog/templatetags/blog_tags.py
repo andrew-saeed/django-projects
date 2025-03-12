@@ -29,11 +29,6 @@ def total_blog_posts():
 
 @register.simple_tag
 def vite_asset(asset_path):
-    """
-    Returns the URL for the built asset from the Vite manifest.
-    Assumes each app's Vite build outputs a manifest.json to:
-        BASE_DIR/blog/static/manifest.json
-    """
     manifest_file = settings.BASE_DIR / 'static' / 'manifest.json'
     try:
         with open(manifest_file) as f:

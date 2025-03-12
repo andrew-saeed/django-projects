@@ -230,6 +230,9 @@
   }
 }
 
+/* Alpinejs */
+[x-cloak] { display: none !important; }
+
 /* Flatpickr Calendar Theme */
 .flatpickr-calendar {
   background-color: var(--color-primary-bg)!important;
@@ -254,5 +257,26 @@
     &:hover {
       background-color: var(--color-hover-bg);
     }
+  }
+}
+
+/* Loader */
+.loader {
+  width: 3rem;
+  height: 3rem;
+  border: 0.3125rem solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

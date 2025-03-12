@@ -6,23 +6,29 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_POST
 from django.db.models import Count
+from django.http import HttpResponse
 
 def get_posts(request, tag_slug=None):
     posts = Post.objects.all()
     tag = None
+    list_paginated = request.GET.get('list-paginated', 0)
 
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         posts = posts.filter(tags__in=[tag])
-    paginator = Paginator(posts, 3)
+    paginator = Paginator(posts, 5)
     page_number = request.GET.get('page', 1)
 
     try:
         posts_list = paginator.page(page_number)
     except EmptyPage:
-        posts_list = paginator.page(paginator.num_pages)
+        if list_paginated:
+            return HttpResponse('')
     except PageNotAnInteger:
         posts_list = paginator.page(1)
+
+    if list_paginated:
+        return render(request, 'blog/post/list-paginated.html', {'posts': posts_list, 'tag': tag})    
     return render(request, 'blog/post/list.html', {'posts': posts_list, 'tag': tag})
 
 def share_post(request, post_id):

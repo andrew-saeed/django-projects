@@ -11,6 +11,31 @@ document.addEventListener('alpine:init', () => {
     const leftSide = document.querySelector('.left-side')
     leftSide.style.transition = 'left 0.3s ease-out'
 
+    Alpine.data('postsList', () => ({
+
+        page:1,
+        isFetching: false,
+        emptyPage: false,
+
+        init() {
+            window.addEventListener('scroll', () => {
+                const margin = document.body.clientHeight - window.innerHeight - 200;
+                if(window.scrollY > margin && !this.emptyPage && !this.isFetching) {
+                    this.fetchPosts()
+                }
+            })
+        },
+        async fetchPosts() {
+            this.page++
+            this.isFetching = true
+            const res = await fetch(`?list-paginated=1&page=${this.page}`)
+            const html = await res.text()
+            if(html === '') this.emptyPage = true
+            this.$el.querySelector('ul').insertAdjacentHTML('beforeend', html)
+            this.isFetching = false
+        }
+    }))
+
     Alpine.data('profile', () => ({
         init() {
             flatpickr("#id_date_of_birth", {})
