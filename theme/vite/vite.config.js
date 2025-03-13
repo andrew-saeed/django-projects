@@ -15,7 +15,7 @@ export default defineConfig({
         assetsDir: '.',
         outDir: `../static`,
         emptyOutDir: true,
-        sourcemap: true,
+        sourcemap: false,
         rollupOptions: {
             input: [
                 'src/main.js',

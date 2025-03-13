@@ -1,4 +1,5 @@
 {% load vite_tags %}
+{% vite_css_vendors as css_vendors %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,6 +15,9 @@
             <!-- Production: Load built assets from manifest -->
             <script type="module" src="{% vite_asset 'src/main.js' %}"></script>
             <link rel="stylesheet" href="{% vite_asset 'src/style.css' %}">
+            {% for style in css_vendors %}
+                <link rel="stylesheet" href="{{style}}">
+            {% endfor %}
         {% endif %}
     </head>
     <body class="bg-black text-base text-primary-text">
