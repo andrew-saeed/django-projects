@@ -9,6 +9,7 @@ mysqlclient = "*"
 django-taggit = "*"
 markdown = "*"
 pillow = "*"
+python-decouple = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
