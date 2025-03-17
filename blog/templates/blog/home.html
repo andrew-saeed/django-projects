@@ -54,7 +54,7 @@
             <ul class="md:mt-2 px-4 space-y-2">
                 {% for tag in tags %}
                     <li class="text-base-1">
-                        <a href="{% url 'blog:get_posts_by_tag' tag.slug %}">#{{tag.name}}</a>
+                        <a class="hover:text-white" href="{% url 'blog:get_posts_by_tag' tag.slug %}">#{{tag.name}}</a>
                     </li>
                 {% endfor %}
             </ul>
