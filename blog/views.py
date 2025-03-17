@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 from django.db.models import Count
 from django.http import HttpResponse
 
-def get_posts(request, tag_slug=None):
+def home(request, tag_slug=None):
     posts = Post.objects.all()
     tag = None
     list_paginated = request.GET.get('list-paginated', 0)
@@ -29,9 +29,11 @@ def get_posts(request, tag_slug=None):
 
     discuss_posts = Post.objects.filter(tags__name__in=['discuss'])[0:5]
 
+    tags = Tag.objects.all()
+
     if list_paginated:
-        return render(request, 'blog/post/list-paginated.html', {'posts': posts_list, 'tag': tag, 'discuss_posts': discuss_posts})    
-    return render(request, 'blog/home.html', {'posts': posts_list, 'tag': tag, 'discuss_posts': discuss_posts})
+        return render(request, 'blog/post/list-paginated.html', {'posts': posts_list, 'tag': tag, 'discuss_posts': discuss_posts, 'tags': tags})    
+    return render(request, 'blog/home.html', {'posts': posts_list, 'tag': tag, 'discuss_posts': discuss_posts, 'tags': tags})
 
 def share_post(request, post_id):
     post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)

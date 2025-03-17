@@ -15,8 +15,8 @@
             max-lg:h-svh max-lg:w-(--left-side-w) max-lg:absolute max-lg:top-0 max-lg:-left-(--left-side-w) max-lg:z-20 max-lg:bg-primary-bg"
             aria-label="Primary sidebar"
         >
-            <div class="top-box bg-primary-bg p-4 space-y-4">
-                <div class="search-box space-y-4 lg:hidden">
+            <div class="bg-primary-bg p-4 rounded-xl space-y-4">
+                <div class="left-side__header space-y-4 lg:hidden">
                     <div class="flex justify-end">
                         <svg @click="closeLeftSide" class="icon-btn" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
@@ -32,7 +32,12 @@
                     </div>
                 </div>
 
-                {% if not request.user.is_authenticated %}
+                {% if request.user.is_authenticated %}
+                    <div class="text-base-1 capitalize">
+                        <span class="font-bold">welcome</span> 
+                        {{request.user.username}}
+                    </div>
+                {% else %}
                     <p class="text-base-1 font-bold">
                         Our Community is a community of 2,000,000 amazing developers
                     </p>
@@ -45,11 +50,19 @@
                     </p>
                 {% endif %}
             </div>
+
+            <ul class="md:mt-2 px-4 space-y-2">
+                {% for tag in tags %}
+                    <li class="text-base-1">
+                        <a href="{% url 'blog:get_posts_by_tag' tag.slug %}">#{{tag.name}}</a>
+                    </li>
+                {% endfor %}
+            </ul>
         </aside>
 
         <main>
             {% if tag %}
-                <header class="main-container">
+                <header class="py-4 px-2">
                     <h1 class="text-medium-2 font-bold text-blue-300">#{{ tag.name }}</h1>
                 </header>
             {% endif %}
