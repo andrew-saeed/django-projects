@@ -27,9 +27,11 @@ def get_posts(request, tag_slug=None):
     except PageNotAnInteger:
         posts_list = paginator.page(1)
 
+    discuss_posts = Post.objects.filter(tags__name__in=['discuss'])[0:5]
+
     if list_paginated:
-        return render(request, 'blog/post/list-paginated.html', {'posts': posts_list, 'tag': tag})    
-    return render(request, 'blog/post/list.html', {'posts': posts_list, 'tag': tag})
+        return render(request, 'blog/post/list-paginated.html', {'posts': posts_list, 'tag': tag, 'discuss_posts': discuss_posts})    
+    return render(request, 'blog/home.html', {'posts': posts_list, 'tag': tag, 'discuss_posts': discuss_posts})
 
 def share_post(request, post_id):
     post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
