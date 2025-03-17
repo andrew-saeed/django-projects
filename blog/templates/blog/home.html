@@ -6,10 +6,6 @@
 
 {% block content %}
 
-    {% if tag %}
-        <h1>Within tag {{ tag.name }}</h1>
-    {% endif %}
-
     <div 
         class="main-container 
         grid grid-cols-1 lg:grid-cols-[var(--left-side-w)_1fr_var(--right-side-w)] lg:gap-2"
@@ -52,6 +48,11 @@
         </aside>
 
         <main>
+            {% if tag %}
+                <header class="main-container">
+                    <h1 class="text-medium-2 font-bold text-blue-300">#{{ tag.name }}</h1>
+                </header>
+            {% endif %}
             <div x-data="postsList">
                 <ul class="space-y-2">
                     {% include "blog/post/list-paginated.html" %}
