@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from taggit.models import Tag
-from .models import Post, LikedItem
+from .models import Post, LikedItem, Comment
 from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -125,5 +125,27 @@ def post_like(request):
             user=request.user,
             content_type=content_type,
             object_id=post_id
+        ).delete()
+    return JsonResponse({'action':action})
+
+@login_required
+@require_POST
+def comment_like(request):
+    action = request.POST.get('action')
+    comment_id = request.POST.get('id')
+    
+    content_type = ContentType.objects.get_for_model(Comment)
+
+    if action == 'like':
+        LikedItem.objects.get_or_create(
+            user=request.user,
+            content_type=content_type,
+            object_id=comment_id
+        )
+    else:
+        LikedItem.objects.filter(
+            user=request.user,
+            content_type=content_type,
+            object_id=comment_id
         ).delete()
     return JsonResponse({'action':action})

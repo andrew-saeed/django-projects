@@ -13,8 +13,9 @@ document.addEventListener('alpine:init', () => {
     const leftSide = document.querySelector('.left-side')
     leftSide.style.transition = 'left 0.3s ease-out'
 
-    Alpine.data('like_post', () => ({
+    Alpine.data('like_content', (url) => ({
 
+        url,
         likeStatus: null,
         pending: false,
 
@@ -22,6 +23,8 @@ document.addEventListener('alpine:init', () => {
             this.likeStatus = this.$root.dataset.status
         },
         async like(action) {
+            if(action == 'notauthed') window.location.href = '/account/login/'
+
             if(this.pending) return
             this.pending = true
 
@@ -29,7 +32,7 @@ document.addEventListener('alpine:init', () => {
             formData.append('id', this.$root.dataset.id)
             formData.append('action', action)
 
-            const result = await fetch('/blog/like/', {
+            const result = await fetch(this.url, {
                 method: 'POST',
                 headers: {'X-CSRFToken': csrftoken},
                 mode:'same-origin',
