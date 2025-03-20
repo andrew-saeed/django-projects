@@ -4,7 +4,8 @@ from django.templatetags.static import static
 from django.db.models import Count
 from django.utils.safestring import mark_safe
 from django import template
-from ..models import Post
+from ..models import Post, LikedItem
+from django.contrib.contenttypes.models import ContentType
 
 register = template.Library()
 
@@ -25,3 +26,13 @@ def older_posts(count):
 @register.simple_tag
 def total_blog_posts():
     return Post.published.count()
+
+@register.simple_tag
+def has_liked(user, post_id):
+    post_content_type = ContentType.objects.get_for_model(Post)
+    result = LikedItem.objects.filter(
+        user=user,
+        content_type=post_content_type,
+        object_id=post_id
+    ).exists()
+    return 'liked' if result else 'empty'

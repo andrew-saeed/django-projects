@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from taggit.models import Tag
-from .models import Post
+from .models import Post, LikedItem
 from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_POST
 from django.db.models import Count
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 
 def home(request, tag_slug=None):
     posts = Post.objects.all()
@@ -92,7 +94,7 @@ def get_post(request, year, month, day, post):
 
     return render(
         request, 
-        'blog/post/single.html', 
+        'blog/single-post.html', 
         {
             'post': post, 
             'comments': comments, 
@@ -103,3 +105,25 @@ def get_post(request, year, month, day, post):
 
 def search(request):
     return render(request, 'blog/search.html')
+
+@login_required
+@require_POST
+def post_like(request):
+    action = request.POST.get('action')
+    post_id = request.POST.get('id')
+    
+    content_type = ContentType.objects.get_for_model(Post)
+
+    if action == 'like':
+        LikedItem.objects.get_or_create(
+            user=request.user,
+            content_type=content_type,
+            object_id=post_id
+        )
+    else:
+        LikedItem.objects.filter(
+            user=request.user,
+            content_type=content_type,
+            object_id=post_id
+        ).delete()
+    return JsonResponse({'action':action})

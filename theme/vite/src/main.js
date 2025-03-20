@@ -1,6 +1,7 @@
 import flatpickr from "flatpickr"
 import Alpine from 'alpinejs'
- 
+import Cookies from 'js-cookie'
+
 window.Alpine = Alpine
 
 import 'flatpickr/dist/flatpickr.css'
@@ -8,8 +9,37 @@ import 'flatpickr/dist/themes/dark.css'
 
 document.addEventListener('alpine:init', () => {
 
+    const csrftoken = Cookies.get('csrftoken')
     const leftSide = document.querySelector('.left-side')
     leftSide.style.transition = 'left 0.3s ease-out'
+
+    Alpine.data('like_post', () => ({
+
+        likeStatus: null,
+        pending: false,
+
+        init() {
+            this.likeStatus = this.$root.dataset.status
+        },
+        async like(action) {
+            if(this.pending) return
+            this.pending = true
+
+            const formData = new FormData()
+            formData.append('id', this.$root.dataset.id)
+            formData.append('action', action)
+
+            const result = await fetch('/blog/like/', {
+                method: 'POST',
+                headers: {'X-CSRFToken': csrftoken},
+                mode:'same-origin',
+                body: formData
+            })
+            const response = await result.json()
+            this.likeStatus = response.action === 'like' ? 'liked' : 'empty'
+            this.pending = false
+        }
+    }))
 
     Alpine.data('postsList', () => ({
 
