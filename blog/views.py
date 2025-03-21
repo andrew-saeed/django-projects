@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 
 def home(request, tag_slug=None):
-    posts = Post.objects.all()
+    posts = Post.objects.select_related('author').prefetch_related('tags')
     tag = None
     list_paginated = request.GET.get('list-paginated', 0)
 
@@ -74,14 +74,14 @@ def get_post(request, year, month, day, post):
     # except Post.DoesNotExist:
     #     raise Http404('post not found')
     post = get_object_or_404(
-        Post, 
+        Post.objects.select_related('author'), 
         status=Post.Status.PUBLISHED, 
         slug=post,
         publish__year=year,
         publish__month=month,
         publish__day=day
     )
-    comments = post.comments.filter(active=True)
+    comments = post.comments.filter(active=True).select_related('author')
     form = CommentForm()
 
     post_tags_ids = post.tags.values_list('id', flat=True)
