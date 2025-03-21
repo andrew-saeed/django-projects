@@ -189,7 +189,7 @@
     &.btn--tertiary {
 
       &:not([disabled]):hover {
-        background-color: var(--color-tertiary-bg);
+        background-color: var(--color-hover-bg);
       }
     }
 

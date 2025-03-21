@@ -15,7 +15,7 @@
     <main class="main-container md:grid md:grid-cols-[max-content_1fr] md:gap-1 max-w-3xl mx-auto">
 
         <section class="sticky top-[calc(100%-4rem)] md:relative md:top-0 left-0">
-            <ul class="md:sticky md:top-2 md:left-0 flex md:flex-col justify-center bg-black/80 md:bg-primary-bg max-md:p-2 rounded-xl">
+            <ul class="md:sticky md:top-2 md:left-0 flex md:flex-col justify-center bg-black/80 max-md:p-2 rounded-xl md:space-y-5">
                 <li x-data="like_content('/blog/post_like/')" data-id="{{post.id}}" data-status="{{post_like_status}}" class="rounded-xl cursor-pointer hover:bg-hover-bg">
                     <div x-cloak x-show="likeStatus == 'notauthed'" @click="like('notauthed')" class="max-md:flex max-md:items-center max-md:gap-2 p-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" role="img" aria-hidden="true" class="crayons-icon">
@@ -59,6 +59,14 @@
                         <div class="text-center">{{like_count}}</div>
                     </div>
                 </li>
+                <li class="rounded-xl cursor-pointer hover:bg-hover-bg">
+                    <a href="#comment" class="block max-md:flex max-md:items-center max-md:gap-2 p-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" role="img" aria-hidden="true" class="crayons-icon">
+                            <path d="M10 3h4a8 8 0 010 16v3.5c-5-2-12-5-12-11.5a8 8 0 018-8zm2 14h2a6 6 0 000-12h-4a6 6 0 00-6 6c0 3.61 2.462 5.966 8 8.48V17z" class="fill-secondary-text"></path>
+                        </svg>
+                        <div class="text-center">{{comments.count}}</div>
+                    </a>
+                </li>
             </ul>
         </section>
 
@@ -92,7 +100,7 @@
                         </h2>
                     {% endwith %}
                 
-                    <ul class="space-y-6">
+                    <ul id="comment" class="space-y-6">
         
                         <li class="grid grid-cols-[max-content_1fr] gap-2">
                             <div class="w-8 h-8 bg-white rounded-full"></div>
