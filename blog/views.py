@@ -69,10 +69,6 @@ def comment_on_post(request, post_id):
     return redirect(post.get_absolute_url())
 
 def get_post(request, year, month, day, post):
-    # try:
-    #     post = Post.objects.get(id=id)
-    # except Post.DoesNotExist:
-    #     raise Http404('post not found')
     post = get_object_or_404(
         Post.objects.select_related('author'), 
         status=Post.Status.PUBLISHED, 
@@ -92,12 +88,16 @@ def get_post(request, year, month, day, post):
         same_tags=Count('tags')
     ).order_by('-publish')[:4]
 
+    content_type = ContentType.objects.get_for_model(Post)
+    like_count = LikedItem.objects.filter(content_type=content_type, object_id=post.id).count()
+
     return render(
         request, 
         'blog/single-post.html', 
         {
             'post': post, 
-            'comments': comments, 
+            'comments': comments,
+            'like_count': like_count,
             'form': form,
             'similar_posts': similar_posts
         }
