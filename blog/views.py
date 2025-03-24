@@ -13,6 +13,7 @@ from django.contrib.contenttypes.models import ContentType
 def home(request, tag_slug=None):
     posts = Post.objects.select_related('author').prefetch_related('tags')
     tag = None
+    bookmarked_post_ids = set()
     list_paginated = request.GET.get('list-paginated', 0)
 
     if tag_slug:
@@ -33,9 +34,26 @@ def home(request, tag_slug=None):
 
     tags = Tag.objects.all()
 
+    if request.user.is_authenticated:
+        bookmarked_post_ids = set(
+            Bookmark.objects.filter(user=request.user).values_list('post_id', flat=True)
+        )
+
     if list_paginated:
-        return render(request, 'blog/post/list-paginated.html', {'posts': posts_list, 'tag': tag, 'discuss_posts': discuss_posts, 'tags': tags})    
-    return render(request, 'blog/home.html', {'posts': posts_list, 'tag': tag, 'discuss_posts': discuss_posts, 'tags': tags})
+        return render(request, 'blog/post/list-paginated.html', {
+            'posts': posts_list, 
+            'tag': tag, 
+            'discuss_posts': discuss_posts, 
+            'tags': tags,
+            'bookmarked_post_ids': bookmarked_post_ids
+        })    
+    return render(request, 'blog/home.html', {
+        'posts': posts_list, 
+        'tag': tag, 
+        'discuss_posts': discuss_posts, 
+        'tags': tags,
+        'bookmarked_post_ids': bookmarked_post_ids
+    })
 
 def share_post(request, post_id):
     post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)

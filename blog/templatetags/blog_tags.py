@@ -52,14 +52,3 @@ def has_liked_comment(user, comment_id):
         object_id=comment_id
     ).exists()
     return 'liked' if result else 'empty'
-
-@register.simple_tag
-def has_bookmarked_post(user, post_id):
-    if user is None or not user.is_authenticated:
-        return 'empty'
-
-    result = Bookmark.objects.filter(
-        user=user,
-        post=post_id,
-    ).exists()
-    return 'bookmarked' if result else 'empty'

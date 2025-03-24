@@ -2,8 +2,6 @@
 
 {% for post in posts %}
 
-    {% has_bookmarked_post request.user post as post_bookmark_status %}
-
     <li class="bg-primary-bg md:rounded-xl p-5">
 
         <div class="mb-2">
@@ -29,7 +27,13 @@
                 </svg>
                 <span class="text-sm capitalize">add comment</span>
             </div>
-            <div x-data="bookmark_post" data-status="{{post_bookmark_status}}" data-user_status="{{request.user}}" data-post_id="{{post.id}}" class="p-2 rounded-md hover:bg-hover-bg cursor-pointer">
+            <div 
+                x-data="bookmark_post" 
+                data-status="{% if post.id in bookmarked_post_ids %}bookmarked{% else %}empty{% endif %}" 
+                data-user_status="{{request.user}}" 
+                data-post_id="{{post.id}}" 
+                class="p-2 rounded-md hover:bg-hover-bg cursor-pointer"
+            >
                 <svg x-cloak x-show="bookmarkStatus == 'empty'" @click="bookmark('bookmark')" width="24" height="24" xmlns="http://www.w3.org/2000/svg" role="presentation">
                     <path d="M6.75 4.5h10.5a.75.75 0 01.75.75v14.357a.375.375 0 01-.575.318L12 16.523l-5.426 3.401A.375.375 0 016 19.607V5.25a.75.75 0 01.75-.75zM16.5 6h-9v11.574l4.5-2.82 4.5 2.82V6z" class="fill-secondary-text"></path>
                 </svg>
