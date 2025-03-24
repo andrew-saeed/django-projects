@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from taggit.models import Tag
-from .models import Post, LikedItem, Comment
+from .models import Post, LikedItem, Comment, Bookmark
 from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -148,4 +148,28 @@ def comment_like(request):
             content_type=content_type,
             object_id=comment_id
         ).delete()
+    return JsonResponse({'action':action})
+
+@login_required
+@require_POST
+def bookmark_post(request):
+    post_id = request.POST.get('post_id')
+    post = get_object_or_404(
+        Post,
+        id=post_id,
+        status=Post.Status.PUBLISHED
+    )
+    action = request.POST.get('action')
+
+    if action == 'bookmark':
+        Bookmark.objects.get_or_create(
+            post=post,
+            user=request.user
+        )
+    else:
+        Bookmark.objects.filter(
+            post=post,
+            user=request.user
+        ).delete()
+
     return JsonResponse({'action':action})

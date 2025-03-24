@@ -13,6 +13,40 @@ document.addEventListener('alpine:init', () => {
     const leftSide = document.querySelector('.left-side')
     leftSide.style.transition = 'left 0.3s ease-out'
 
+    Alpine.data('bookmark_post', () => ({
+
+        url: '/blog/bookmark_post/',
+        bookmarkStatus: null,
+        userStatus: null,
+        pending: false,
+
+        init() {
+            this.bookmarkStatus = this.$root.dataset.status
+            this.userStatus = this.$root.dataset.user_status
+        },
+
+        async bookmark(action) {
+            if(this.userStatus == 'AnonymousUser') window.location.href = '/account/login/'
+
+            if(this.pending) return
+            this.pending = true
+
+            const formData = new FormData()
+            formData.append('post_id', this.$root.dataset.post_id)
+            formData.append('action', action)
+
+            const result = await fetch(this.url, {
+                method: 'POST',
+                headers: {'X-CSRFToken': csrftoken},
+                mode:'same-origin',
+                body: formData
+            })
+            const response = await result.json()
+            this.bookmarkStatus = response.action === 'bookmark' ? 'bookmarked' : 'empty'
+            this.pending = false
+        }
+    }))
+
     Alpine.data('like_content', (url) => ({
 
         url,

@@ -12,4 +12,5 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('post_like/', views.post_like, name='post_like'),
     path('comment_like/', views.comment_like, name='comment_like'),
+    path('bookmark_post/', views.bookmark_post, name='bookmark_post'),
 ]

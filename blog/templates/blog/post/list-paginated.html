@@ -1,4 +1,9 @@
+{% load blog_tags %}
+
 {% for post in posts %}
+
+    {% has_bookmarked_post request.user post as post_bookmark_status %}
+
     <li class="bg-primary-bg md:rounded-xl p-5">
 
         <div class="mb-2">
@@ -17,11 +22,21 @@
             {% endfor %}
         </div>
 
-        <div class="inline-flex items-center gap-1 mt-4 p-2 -ml-2 hover:bg-hover-bg rounded-md cursor-pointer">
-            <svg class="crayons-icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 5h3a6 6 0 110 12v2.625c-3.75-1.5-9-3.75-9-8.625a6 6 0 016-6zM12 15.5h1.5a4.501 4.501 0 001.722-8.657A4.5 4.5 0 0013.5 6.5h-3A4.5 4.5 0 006 11c0 2.707 1.846 4.475 6 6.36V15.5z" class="fill-secondary-text"></path>
-            </svg>
-            <span class="text-sm capitalize">add comment</span>
+        <div class="flex justify-between items-center mt-4">
+            <div class="inline-flex items-center justify-between gap-1 p-2 pr-3 -ml-2 hover:bg-hover-bg rounded-md cursor-pointer">
+                <svg class="crayons-icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.5 5h3a6 6 0 110 12v2.625c-3.75-1.5-9-3.75-9-8.625a6 6 0 016-6zM12 15.5h1.5a4.501 4.501 0 001.722-8.657A4.5 4.5 0 0013.5 6.5h-3A4.5 4.5 0 006 11c0 2.707 1.846 4.475 6 6.36V15.5z" class="fill-secondary-text"></path>
+                </svg>
+                <span class="text-sm capitalize">add comment</span>
+            </div>
+            <div x-data="bookmark_post" data-status="{{post_bookmark_status}}" data-user_status="{{request.user}}" data-post_id="{{post.id}}" class="p-2 rounded-md hover:bg-hover-bg cursor-pointer">
+                <svg x-cloak x-show="bookmarkStatus == 'empty'" @click="bookmark('bookmark')" width="24" height="24" xmlns="http://www.w3.org/2000/svg" role="presentation">
+                    <path d="M6.75 4.5h10.5a.75.75 0 01.75.75v14.357a.375.375 0 01-.575.318L12 16.523l-5.426 3.401A.375.375 0 016 19.607V5.25a.75.75 0 01.75-.75zM16.5 6h-9v11.574l4.5-2.82 4.5 2.82V6z" class="fill-secondary-text"></path>
+                </svg>
+                <svg x-cloak x-show="bookmarkStatus == 'bookmarked'" @click="bookmark('unbookmark')" width="24" height="24" xmlns="http://www.w3.org/2000/svg" role="presentation">
+                    <path d="M5 2h14a1 1 0 011 1v19.143a.5.5 0 01-.766.424L12 18.03l-7.234 4.536A.5.5 0 014 22.143V3a1 1 0 011-1z" class="fill-blue-400 text-black"></path>
+                </svg>
+            </div>
         </div>
     </li>
 {% endfor %}
