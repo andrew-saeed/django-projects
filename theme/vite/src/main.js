@@ -51,13 +51,15 @@ document.addEventListener('alpine:init', () => {
 
         url,
         likeStatus: null,
+        userStatus: null,
         pending: false,
 
         init() {
             this.likeStatus = this.$root.dataset.status
+            this.userStatus = this.$root.dataset.user_status
         },
         async like(action) {
-            if(action == 'notauthed') window.location.href = '/account/login/'
+            if(this.userStatus == 'AnonymousUser') window.location.href = '/account/login/'
 
             if(this.pending) return
             this.pending = true

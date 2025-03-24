@@ -6,7 +6,21 @@
 
 {% block content %}
 
+    <svg width="0" height="0">
+        <defs>
+            <linearGradient id="global-c1" gradientUnits="userSpaceOnUse" x1="15.908" x2="15.908" y1="3.199" y2="28.854">
+                <stop offset="0" stop-color="#fd556a"/>
+                <stop offset="1" stop-color="#aa172a"/>
+            </linearGradient>
+            <linearGradient id="global-c2" gradientUnits="userSpaceOnUse" x1="16.443" x2="16.443" y1="4.828" y2="26.958">
+                <stop offset="0" stop-color="#ffdc5d"/>
+                <stop offset="1" stop-color="#ffcc14"/>
+            </linearGradient>
+        </defs>
+    </svg>
+
     {% has_liked_post request.user post.id as post_like_status %}
+    {% has_bookmarked_post request.user post as post_bookmark_status %}
 
     <div class="lg:hidden">
         {% include 'blog/post/includes/left-side.html' %}
@@ -14,22 +28,16 @@
 
     <main class="main-container md:grid md:grid-cols-[max-content_1fr] md:gap-1 max-w-3xl mx-auto">
 
-        <section class="sticky top-[calc(100%-4rem)] md:relative md:top-0 left-0">
+        <section id="post-meta-ctrls" class="sticky top-[calc(100%-4rem)] md:relative md:top-0 left-0">
+
             <ul class="md:sticky md:top-2 md:left-0 flex md:flex-col justify-center bg-black/80 max-md:p-2 rounded-xl md:space-y-5">
-                <li x-data="like_content('/blog/post_like/')" data-id="{{post.id}}" data-status="{{post_like_status}}" class="rounded-xl cursor-pointer hover:bg-hover-bg">
-                    <div x-cloak x-show="likeStatus == 'notauthed'" @click="like('notauthed')" class="max-md:flex max-md:items-center max-md:gap-2 p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" role="img" aria-hidden="true" class="crayons-icon">
-                            <g clip-path="url(#clip0_988_3276)">
-                                <path d="M19 14V17H22V19H18.999L19 22H17L16.999 19H14V17H17V14H19ZM20.243 4.75698C22.505 7.02498 22.583 10.637 20.479 12.992L19.059 11.574C20.39 10.05 20.32 7.65998 18.827 6.16998C17.324 4.67098 14.907 4.60698 13.337 6.01698L12.002 7.21498L10.666 6.01798C9.09103 4.60598 6.67503 4.66798 5.17203 6.17198C3.68203 7.66198 3.60703 10.047 4.98003 11.623L13.412 20.069L12 21.485L3.52003 12.993C1.41603 10.637 1.49503 7.01898 3.75603 4.75698C6.02103 2.49298 9.64403 2.41698 12 4.52898C14.349 2.41998 17.979 2.48998 20.242 4.75698H20.243Z" class="fill-secondary-text"></path>
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_988_3276">
-                                    <rect width="24" height="24" fill="black"></rect>
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        <div class="text-center">{{like_count}}</div>
-                    </div>
+                <li 
+                    x-data="like_content('/blog/post_like/')" 
+                    data-id="{{post.id}}" 
+                    data-status="{{post_like_status}}" 
+                    data-user_status="{{request.user}}" 
+                    class="rounded-xl cursor-pointer hover:bg-hover-bg"
+                >
                     <div x-cloak x-show="likeStatus == 'empty'" @click="like('like')" class="max-md:flex max-md:items-center max-md:gap-2 p-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" role="img" aria-hidden="true" class="crayons-icon">
                             <g clip-path="url(#clip0_988_3276)">
@@ -64,16 +72,37 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" role="img" aria-hidden="true" class="crayons-icon">
                             <path d="M10 3h4a8 8 0 010 16v3.5c-5-2-12-5-12-11.5a8 8 0 018-8zm2 14h2a6 6 0 000-12h-4a6 6 0 00-6 6c0 3.61 2.462 5.966 8 8.48V17z" class="fill-secondary-text"></path>
                         </svg>
-                        <div class="text-center">{{comments.count}}</div>
+                        <div class="text-center">{{comments_count}}</div>
                     </a>
+                </li>
+                <li 
+                    x-data="bookmark_post" 
+                    data-status="{{post_bookmark_status}}" 
+                    data-user_status="{{request.user}}" 
+                    data-post_id="{{post.id}}"
+                    class="rounded-xl cursor-pointer hover:bg-hover-bg"
+                >
+                    <div x-cloak x-show="bookmarkStatus == 'empty'" @click="bookmark('bookmark')" class="max-md:flex max-md:items-center max-md:gap-2 p-2">
+                        <svg width="32" height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="presentation">
+                            <path d="M6.75 4.5h10.5a.75.75 0 01.75.75v14.357a.375.375 0 01-.575.318L12 16.523l-5.426 3.401A.375.375 0 016 19.607V5.25a.75.75 0 01.75-.75zM16.5 6h-9v11.574l4.5-2.82 4.5 2.82V6z" class="fill-secondary-text"></path>
+                        </svg>
+                        <div class="text-center">{{bookmarks_count}}</div>
+                    </div>
+                    <div x-cloak x-show="bookmarkStatus == 'bookmarked'" @click="bookmark('unbookmark')" class="max-md:flex max-md:items-center max-md:gap-2 p-2">
+                        <svg width="32" height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="presentation">
+                            <path d="M5 2h14a1 1 0 011 1v19.143a.5.5 0 01-.766.424L12 18.03l-7.234 4.536A.5.5 0 014 22.143V3a1 1 0 011-1z" class="fill-blue-400 text-black"></path>
+                        </svg>
+                        <div class="text-center">{{bookmarks_count}}</div>
+                    </div>
                 </li>
             </ul>
         </section>
 
         <div class="-mt-[4rem] md:m-0">
-            <section class="bg-primary-bg md:rounded-xl">
+            
+            <section id="the-post" class="bg-primary-bg md:rounded-xl">
         
-                <div class="px-4 lg:px-16 py-8 pb-0">
+                <div id="post-header" class="px-4 lg:px-16 py-8 pb-0">
         
                     <div class="mb-5">
                         {% include "blog/post/includes/post-author.html" %}
@@ -89,16 +118,14 @@
             
                 </div>
             
-                <div class="post-body px-4 lg:px-16 py-8">
+                <div id="post-body" class="px-4 lg:px-16 py-8">
                     {{ post.body|markdown }}
                 </div>
             
-                <div class="px-2 lg:px-16 py-8 border-t border-(--color-primary-border)">
-                    {% with comments.count as total_comments %}
-                        <h2 class="capitalize text-medium mb-6">
-                            comment{{ total_comments|pluralize }} ({{ total_comments }})
-                        </h2>
-                    {% endwith %}
+                <div id="post-comments" class="px-2 lg:px-16 py-8 border-t border-(--color-primary-border)">
+                    <h2 class="capitalize text-medium mb-6">
+                        comment{{ total_comments|pluralize }} ({{ comments_count }})
+                    </h2>
                 
                     <ul id="comment" class="space-y-6">
         
@@ -123,8 +150,6 @@
         
                         {% for comment in comments %}
 
-                            {% has_liked_comment request.user comment.id as comment_like_status %}
-
                             <li class="grid grid-cols-[max-content_1fr] gap-2">
                                 <div class="w-8 h-8 bg-white rounded-full"></div>
                                 <div class="w-full p-1 shadow-[0_0_0_1px_var(--color-tertiary-bg)] rounded-md">
@@ -135,19 +160,13 @@
                                     </p>
                                     <p class="text-base-1 mt-2 mb-4 px-3">{{comment.body}}</p>
                                     <div class="flex">
-                                        <div x-data="like_content('/blog/comment_like/')" data-id="{{comment.id}}" data-status="{{comment_like_status}}" class="rounded-xl cursor-pointer hover:bg-hover-bg">
-                                            <div x-cloak x-show="likeStatus == 'notauthed'" @click="like('notauthed')" class="p-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" role="img" aria-hidden="true" class="crayons-icon">
-                                                    <g clip-path="url(#clip0_988_3276)">
-                                                        <path d="M19 14V17H22V19H18.999L19 22H17L16.999 19H14V17H17V14H19ZM20.243 4.75698C22.505 7.02498 22.583 10.637 20.479 12.992L19.059 11.574C20.39 10.05 20.32 7.65998 18.827 6.16998C17.324 4.67098 14.907 4.60698 13.337 6.01698L12.002 7.21498L10.666 6.01798C9.09103 4.60598 6.67503 4.66798 5.17203 6.17198C3.68203 7.66198 3.60703 10.047 4.98003 11.623L13.412 20.069L12 21.485L3.52003 12.993C1.41603 10.637 1.49503 7.01898 3.75603 4.75698C6.02103 2.49298 9.64403 2.41698 12 4.52898C14.349 2.41998 17.979 2.48998 20.242 4.75698H20.243Z" class="fill-secondary-text"></path>
-                                                    </g>
-                                                    <defs>
-                                                        <clipPath id="clip0_988_3276">
-                                                            <rect width="24" height="24" fill="black"></rect>
-                                                        </clipPath>
-                                                    </defs>
-                                                </svg>
-                                            </div>
+                                        <div 
+                                            x-data="like_content('/blog/comment_like/')" 
+                                            data-id="{{comment.id}}" 
+                                            data-status="{% if comment.id in liked_comments_set %}liked{% else %}empty{% endif %}"
+                                            data-user_status="{{request.user}}" 
+                                            class="rounded-xl cursor-pointer hover:bg-hover-bg"
+                                        >
                                             <div x-cloak x-show="likeStatus == 'empty'" @click="like('like')" class="p-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" role="img" aria-hidden="true" class="crayons-icon">
                                                     <g clip-path="url(#clip0_988_3276)">
@@ -162,16 +181,8 @@
                                             </div>
                                             <div x-cloak x-show="likeStatus == 'liked'" @click="like('unlike')" class="p-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 32 32" fill="none">
-                                                    <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="15.908" x2="15.908" y1="3.199" y2="28.854">
-                                                        <stop offset="0" stop-color="#fd556a"/>
-                                                        <stop offset="1" stop-color="#aa172a"/>
-                                                    </linearGradient>
-                                                    <linearGradient id="b" gradientUnits="userSpaceOnUse" x1="16.443" x2="16.443" y1="4.828" y2="26.958">
-                                                        <stop offset="0" stop-color="#ffdc5d"/>
-                                                        <stop offset="1" stop-color="#ffcc14"/>
-                                                    </linearGradient>
-                                                    <path d="M30.216 11.094a7.894 7.894 0 0 0-7.894-7.895 7.88 7.88 0 0 0-6.414 3.303A7.88 7.88 0 0 0 9.494 3.2 7.894 7.894 0 0 0 1.6 11.094c0 .617.078 1.216.213 1.792 1.096 6.81 8.668 13.996 14.095 15.968 5.426-1.972 13-9.157 14.094-15.967a7.796 7.796 0 0 0 .214-1.793z" fill="url(#a)"/>
-                                                    <path d="m28.986 20.743-3.06-1.132-1.132-3.06a.8.8 0 0 0-1.501 0L22.16 19.61l-3.06 1.133a.8.8 0 0 0 0 1.5l3.06 1.133 1.133 3.06a.8.8 0 0 0 1.5 0l1.133-3.06 3.06-1.133a.8.8 0 0 0 0-1.5zm-18.4-12.8-1.892-.7-.7-1.892a.8.8 0 0 0-1.501 0l-.701 1.892-1.891.7a.8.8 0 0 0 0 1.5l1.892.7.7 1.892a.8.8 0 0 0 1.5 0l.7-1.892 1.893-.7a.8.8 0 0 0 0-1.5z" fill="url(#b)"/>
+                                                    <path d="M30.216 11.094a7.894 7.894 0 0 0-7.894-7.895 7.88 7.88 0 0 0-6.414 3.303A7.88 7.88 0 0 0 9.494 3.2 7.894 7.894 0 0 0 1.6 11.094c0 .617.078 1.216.213 1.792 1.096 6.81 8.668 13.996 14.095 15.968 5.426-1.972 13-9.157 14.094-15.967a7.796 7.796 0 0 0 .214-1.793z" fill="url(#global-c1)"/>
+                                                    <path d="m28.986 20.743-3.06-1.132-1.132-3.06a.8.8 0 0 0-1.501 0L22.16 19.61l-3.06 1.133a.8.8 0 0 0 0 1.5l3.06 1.133 1.133 3.06a.8.8 0 0 0 1.5 0l1.133-3.06 3.06-1.133a.8.8 0 0 0 0-1.5zm-18.4-12.8-1.892-.7-.7-1.892a.8.8 0 0 0-1.501 0l-.701 1.892-1.891.7a.8.8 0 0 0 0 1.5l1.892.7.7 1.892a.8.8 0 0 0 1.5 0l.7-1.892 1.893-.7a.8.8 0 0 0 0-1.5z" fill="url(#global-c2)"/>
                                                 </svg>
                                             </div>
                                         </div>
@@ -183,7 +194,7 @@
                 </div>
             </section>
         
-            <section class="bg-primary-bg px-16 py-8 mt-8 md:rounded-xl">
+            <section id="read-next" class="bg-primary-bg px-16 py-8 mt-8 md:rounded-xl">
         
                 <h2 class="text-medium mb-6">Read next</h2>
                 

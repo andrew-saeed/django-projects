@@ -109,15 +109,30 @@ def get_post(request, year, month, day, post):
     content_type = ContentType.objects.get_for_model(Post)
     like_count = LikedItem.objects.filter(content_type=content_type, object_id=post.id).count()
 
+    comment_content_type = ContentType.objects.get_for_model(Comment)
+    liked_comments = Comment.objects.filter(
+        post=post,
+        id__in=LikedItem.objects.filter(
+            content_type=comment_content_type,
+            object_id__in=post.comments.values_list('id', flat=True)
+        ).values_list('object_id', flat=True)
+    )
+    liked_comments_set = set(liked_comments.values_list("id", flat=True))
+
+    bookmarks_count = Bookmark.objects.filter(post=post).count()
+
     return render(
         request, 
         'blog/single-post.html', 
         {
             'post': post, 
             'comments': comments,
+            'comments_count': comments.count(),
+            'bookmarks_count': bookmarks_count,
             'like_count': like_count,
             'form': form,
-            'similar_posts': similar_posts
+            'similar_posts': similar_posts,
+            'liked_comments_set': liked_comments_set
         }
     )
 

@@ -30,7 +30,7 @@ def total_blog_posts():
 @register.simple_tag
 def has_liked_post(user, post_id):
     if user is None or not user.is_authenticated:
-        return 'notauthed'
+        return 'empty'
 
     post_content_type = ContentType.objects.get_for_model(Post)
     result = LikedItem.objects.filter(
@@ -41,14 +41,12 @@ def has_liked_post(user, post_id):
     return 'liked' if result else 'empty'
 
 @register.simple_tag
-def has_liked_comment(user, comment_id):
+def has_bookmarked_post(user, post):
     if user is None or not user.is_authenticated:
-        return 'notauthed'
-
-    comment_content_type = ContentType.objects.get_for_model(Comment)
-    result = LikedItem.objects.filter(
+        return 'empty'
+    
+    result = Bookmark.objects.filter(
         user=user,
-        content_type=comment_content_type,
-        object_id=comment_id
+        post=post
     ).exists()
-    return 'liked' if result else 'empty'
+    return 'bookmarked' if result else 'empty'
