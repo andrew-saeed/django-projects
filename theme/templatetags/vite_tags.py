@@ -16,7 +16,7 @@ def vite_asset(asset_path):
     except Exception as e:
         # Log the error or raise an exception as needed.
         return f"<!-- Error loading asset: {e} -->"
-    
+
 @register.simple_tag
 def vite_css_vendors():
     try:

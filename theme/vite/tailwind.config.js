@@ -4,6 +4,7 @@ export default {
     "../templates/**/*.html",
     "../../blog/templates/**/*.html",
     "../../account/templates/**/*.html",
+    "../../landingpage/templates/**/*.html",
   ],
   theme: {
     extend: {},

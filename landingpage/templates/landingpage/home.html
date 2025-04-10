@@ -1,11 +1,30 @@
+{% load vite_tags %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hey I'm learning django</title>
-</head>
-<body>
-    Hey I'm learning django
-</body>
+<html>
+    <head>
+        <title>welcome</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% if debug %}
+            <!-- Development: Load Vite Dev Server scripts -->
+            <script type="module" src="http://localhost:4200/@vite/client"></script>
+            <script type="module" src="http://localhost:4200/src/main.js"></script>
+            <link rel="stylesheet" href="http://localhost:4200/src/style.css">
+        {% else %}
+            <!-- Production: Load built assets from manifest -->
+            <script type="module" src="{% vite_asset 'src/main.js' %}"></script>
+            <link rel="stylesheet" href="{% vite_asset 'src/style.css' %}">
+            {% for style in css_vendors %}
+                <link rel="stylesheet" href="{{style}}">
+            {% endfor %}
+        {% endif %}
+    </head>
+    <body class="h-svh flex flex-col justify-center items-center bg-primary-bg text-base text-primary-text space-y-4">
+        <h1 class="text-large font-bold bg-gradient-to-r from-[rgb(59,130,246)] to-[rgba(221,11,11,1)] bg-clip-text text-transparent">Hey:) I'm Learning Django</h1>
+        <section>
+            <h2>
+                <a href="/blog" class="block px-4 py-2 rounded-md underline underline-offset-4 hover:bg-hover-bg">Check my New Blog Project</a>
+            </h2>
+        </section>
+    </body>
 </html>
