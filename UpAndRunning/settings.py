@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'taggit',
     'blog.apps.BlogConfig',
     'theme.apps.ThemeConfig',
+    'landingpage.apps.LandingpageConfig',
 ]
 
 MIDDLEWARE = [
